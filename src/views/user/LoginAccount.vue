@@ -2,22 +2,22 @@
     <div>
       <a-form-model ref="form" :model="model" :rules="validatorRules">
         <a-form-model-item required prop="username">
-          <j-input v-model="model.username" size="large" placeholder="请输入帐户名 / admin">
+          <a-input v-model="model.username" size="large" placeholder="请输入帐户名 / admin">
             <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-          </j-input>
+          </a-input>
         </a-form-model-item>
         <a-form-model-item required prop="password">
-          <j-input v-model="model.password" size="large" type="password" autocomplete="false" placeholder="请输入密码 / 123456">
+          <a-input v-model="model.password" size="large" type="password" autocomplete="false" placeholder="请输入密码 / 123456">
             <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-          </j-input>
+          </a-input>
         </a-form-model-item>
 
         <a-row :gutter="0">
           <a-col :span="16">
             <a-form-model-item required prop="inputCode">
-              <j-input v-model="model.inputCode" size="large" type="text" placeholder="请输入验证码">
+              <a-input v-model="model.inputCode" size="large" type="text" placeholder="请输入验证码">
                 <a-icon slot="prefix" type="smile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-              </j-input>
+              </a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="8" style="text-align: right">
