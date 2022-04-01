@@ -8,12 +8,12 @@
 
           <a-col :span="6">
             <a-form-item label="标题">
-              <a-input placeholder="请输入标题" v-model="queryParam.titile"></a-input>
+              <j-input placeholder="请输入标题" v-model="queryParam.titile"></j-input>
             </a-form-item>
           </a-col>
           <!--<a-col :span="6">
             <a-form-item label="内容">
-              <a-input placeholder="请输入内容" v-model="queryParam.msgContent"></a-input>
+              <j-input placeholder="请输入内容" v-model="queryParam.msgContent"></j-input>
             </a-form-item>
           </a-col>-->
 

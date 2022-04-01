@@ -8,7 +8,7 @@
 
           <a-col :md="6" :sm="12">
             <a-form-item label="账号">
-              <!--<a-input placeholder="请输入账号查询" v-model="queryParam.username"></a-input>-->
+              <!--<j-input placeholder="请输入账号查询" v-model="queryParam.username"></j-input>-->
               <j-input placeholder="输入账号模糊查询" v-model="queryParam.username"></j-input>
             </a-form-item>
           </a-col>
@@ -27,13 +27,13 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="真实名字">
-                <a-input placeholder="请输入真实名字" v-model="queryParam.realname"></a-input>
+                <j-input placeholder="请输入真实名字" v-model="queryParam.realname"></j-input>
               </a-form-item>
             </a-col>
 
             <a-col :md="6" :sm="8">
               <a-form-item label="手机号码">
-                <a-input placeholder="请输入手机号码查询" v-model="queryParam.phone"></a-input>
+                <j-input placeholder="请输入手机号码查询" v-model="queryParam.phone"></j-input>
               </a-form-item>
             </a-col>
 
@@ -396,5 +396,5 @@
   }
 </script>
 <style scoped>
-  @import '~@assets/less/common.less'
+  @import '~@assets/less/common.less';
 </style>

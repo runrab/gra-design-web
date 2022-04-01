@@ -8,28 +8,28 @@
 
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="消息内容">
-              <a-input placeholder="请输入消息内容" v-model="queryParam.context"></a-input>
+              <j-input placeholder="请输入消息内容" v-model="queryParam.context"></j-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="用户id">
-              <a-input placeholder="请输入用户id" v-model="queryParam.userid"></a-input>
+              <j-input placeholder="请输入用户id" v-model="queryParam.userid"></j-input>
             </a-form-item>
           </a-col>
         <template v-if="toggleSearchStatus">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="区分身份信息">
-              <a-input placeholder="请输入区分身份信息" v-model="queryParam.identity"></a-input>
+              <j-input placeholder="请输入区分身份信息" v-model="queryParam.identity"></j-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="可见性0本人可见 1全体 -1删除 ">
-              <a-input placeholder="请输入可见性0本人可见 1全体 -1删除 " v-model="queryParam.visible"></a-input>
+              <j-input placeholder="请输入可见性0本人可见 1全体 -1删除 " v-model="queryParam.visible"></j-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="头像">
-              <a-input placeholder="请输入头像" v-model="queryParam.avatar"></a-input>
+              <j-input placeholder="请输入头像" v-model="queryParam.avatar"></j-input>
             </a-form-item>
           </a-col>
           </template>

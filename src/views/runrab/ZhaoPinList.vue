@@ -8,18 +8,18 @@
 
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="发布用户">
-              <a-input placeholder="请输入发布用户" v-model="queryParam.userid"></a-input>
+              <j-input placeholder="请输入发布用户" v-model="queryParam.userid"></j-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="发布内容">
-              <a-input placeholder="请输入发布内容" v-model="queryParam.context"></a-input>
+              <j-input placeholder="请输入发布内容" v-model="queryParam.context"></j-input>
             </a-form-item>
           </a-col>
         <template v-if="toggleSearchStatus">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="头像">
-              <a-input placeholder="请输入头像" v-model="queryParam.avatar"></a-input>
+              <j-input placeholder="请输入头像" v-model="queryParam.avatar"></j-input>
             </a-form-item>
           </a-col>
           </template>

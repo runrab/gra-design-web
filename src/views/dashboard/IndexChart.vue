@@ -9,15 +9,15 @@
           </a-tooltip>
           <div>
             <trend flag="up" style="margin-right: 16px;">
-              <span slot="term">周同比</span>
-              {{result.progress}}
+              <span slot="term">男性:</span>
+              {{ result.sexManNum | NumberFormat }}
             </trend>
             <trend flag="down">
-              <span slot="term">日同比</span>
-              {{result.progress}}
+              <span slot="term">女性:</span>
+              {{ result.sexWoNum | NumberFormat }}
             </trend>
           </div>
-          <template slot="footer">日均人数<span> 234.56</span></template>
+          <template slot="footer">男女比例:<span> {{ (result.sexManNum / result.sexWoNum).toFixed(2)  }}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
@@ -29,7 +29,9 @@
           <div>
             <mini-area />
           </div>
-          <template slot="footer">日填写<span> {{ '1234' | NumberFormat }}</span></template>
+          <template slot="footer">男性:<span> {{ result.sexStuManNum | NumberFormat }} </span></template>
+          <template slot="footer">女性:<span> {{ result.sexStuWoNum | NumberFormat }} </span></template>
+          <template slot="footer">男女比例:<span>  {{ (result.sexStuManNum / result.sexStuWoNum).toFixed(2)  }}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
@@ -41,7 +43,7 @@
           <div>
             <mini-bar :height="40" />
           </div>
-          <template slot="footer">转化率 <span>{{result.progress}}</span></template>
+          <template slot="footer">填写率 <span>{{result.progress}}</span></template>
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
@@ -56,11 +58,11 @@
           <template slot="footer">
             <trend flag="down" style="margin-right: 16px;">
               <span slot="term">同周比</span>
-              {{result.progress}}
+              {{result.sexStuManNum}}
             </trend>
             <trend flag="up">
               <span slot="term">日环比</span>
-              {{result.progress}}
+              {{result.sexStuManNum}}
             </trend>
           </template>
         </chart-card>
@@ -228,6 +230,11 @@
             this.result.userCount =  res.result.userCount;
             this.result.userStuCount =  res.result.userStuCount;
             this.result.inCount =  res.result.inCount;
+            this.result.sexManNum=res.result.sexManNum
+            this.result.sexWoNum=res.result.sexWoNum
+            this.result.sexStuManNum=res.result.sexStuManNum
+            this.result.sexStuWoNum=res.result.sexStuWoNum
+
 
 
             let hotCity = res.result.hotCity;
