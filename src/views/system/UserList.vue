@@ -392,7 +392,6 @@
         }
       },
     }
-
   }
 </script>
 <style scoped>
