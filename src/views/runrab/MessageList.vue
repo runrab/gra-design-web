@@ -1,60 +1,23 @@
 <template>
   <a-card :bordered="false">
-
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="消息内容">
-              <j-input placeholder="请输入消息内容" v-model="queryParam.context"></j-input>
-            </a-form-item>
-          </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="用户id">
-              <j-input placeholder="请输入用户id" v-model="queryParam.userid"></j-input>
-            </a-form-item>
-          </a-col>
-        <template v-if="toggleSearchStatus">
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="区分身份信息">
-              <j-input placeholder="请输入区分身份信息" v-model="queryParam.identity"></j-input>
-            </a-form-item>
-          </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="可见性0本人可见 1全体 -1删除 ">
-              <j-input placeholder="请输入可见性0本人可见 1全体 -1删除 " v-model="queryParam.visible"></j-input>
-            </a-form-item>
-          </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="头像">
-              <j-input placeholder="请输入头像" v-model="queryParam.avatar"></j-input>
-            </a-form-item>
-          </a-col>
-          </template>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
-            </span>
-          </a-col>
-
         </a-row>
       </a-form>
     </div>
+    <!-- 查询区域-END -->
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('消息')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('留言信息')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
+      <!-- 高级查询区域 -->
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -73,15 +36,36 @@
       <a-table
         ref="table"
         size="middle"
+        :scroll="{x:true}"
         bordered
         rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        class="j-table-force-nowrap"
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
         @change="handleTableChange">
+
+        <template slot="htmlSlot" slot-scope="text">
+          <div v-html="text"></div>
+        </template>
+        <template slot="imgSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
+          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+        </template>
+        <template slot="fileSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
+          <a-button
+            v-else
+            :ghost="true"
+            type="primary"
+            icon="download"
+            size="small"
+            @click="downloadFile(text)">
+            下载
+          </a-button>
+        </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
@@ -90,6 +74,9 @@
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
+              <a-menu-item>
+                <a @click="handleDetail(record)">详情</a>
+              </a-menu-item>
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
@@ -101,27 +88,27 @@
 
       </a-table>
     </div>
-    <!-- table区域-end -->
 
-    <!-- 表单区域 -->
     <message-modal ref="modalForm" @ok="modalFormOk"></message-modal>
   </a-card>
 </template>
 
 <script>
+
   import '@/assets/less/TableExpand.less'
-  import MessageModal from './modules/MessageModal'
+  import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import MessageModal from './modules/MessageModal'
 
   export default {
-    name: "MessageList",
-    mixins:[JeecgListMixin],
+    name: 'MessageList',
+    mixins:[JeecgListMixin, mixinDevice],
     components: {
       MessageModal
     },
     data () {
       return {
-        description: '消息管理页面',
+        description: '留言信息管理页面',
         // 表头
         columns: [
           {
@@ -133,55 +120,77 @@
             customRender:function (t,r,index) {
               return parseInt(index)+1;
             }
-           },
-		   {
-            title: '消息内容',
+          },
+          {
+            title:'留言用户',
+            align:"center",
+            sorter: true,
+            dataIndex: 'userid'
+          },
+          {
+            title:'用户头像',
+            align:"center",
+            dataIndex: 'avatar',
+            scopedSlots: {customRender: 'imgSlot'}
+          },
+          {
+            title:'身份信息',
+            align:"center",
+            sorter: true,
+            dataIndex: 'identity'
+          },
+          {
+            title:'可见性',
+            align:"center",
+            sorter: true,
+            dataIndex: 'visible'
+          },
+          {
+            title:'留言内容',
             align:"center",
             dataIndex: 'context'
-           },
-		   {
-            title: 'userid',
-            align:"center",
-            dataIndex: 'userid'
-           },
-		   {
-            title: '区分身份信息',
-            align:"center",
-            dataIndex: 'identity'
-           },
-		   {
-            title: '可见性0本人可见 1全体 -1删除 ',
-            align:"center",
-            dataIndex: 'visible'
-           },
-		   {
-            title: '头像',
-            align:"center",
-            dataIndex: 'avatar'
-           },
+          },
           {
             title: '操作',
             dataIndex: 'action',
             align:"center",
-            scopedSlots: { customRender: 'action' },
+            fixed:"right",
+            width:147,
+            scopedSlots: { customRender: 'action' }
           }
         ],
-		url: {
+        url: {
           list: "/runrab/message/list",
           delete: "/runrab/message/delete",
           deleteBatch: "/runrab/message/deleteBatch",
-          exportXlsUrl: "runrab/message/exportXls",
+          exportXlsUrl: "/runrab/message/exportXls",
           importExcelUrl: "runrab/message/importExcel",
-       },
-    }
-  },
-  computed: {
-    importExcelUrl: function(){
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-    }
-  },
+          
+        },
+        dictOptions:{},
+        superFieldList:[],
+      }
+    },
+    created() {
+    this.getSuperFieldList();
+    },
+    computed: {
+      importExcelUrl: function(){
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+      },
+    },
     methods: {
-     
+      initDictConfig(){
+      },
+      getSuperFieldList(){
+        let fieldList=[];
+        fieldList.push({type:'string',value:'userid',text:'留言用户',dictCode:''})
+        fieldList.push({type:'string',value:'avatar',text:'用户头像',dictCode:''})
+        fieldList.push({type:'int',value:'identity',text:'身份信息',dictCode:''})
+        fieldList.push({type:'int',value:'visible',text:'可见性',dictCode:''})
+        fieldList.push({type:'string',value:'context',text:'留言内容',dictCode:''})
+        this.superFieldList = fieldList
+      }
     }
   }
 </script>
