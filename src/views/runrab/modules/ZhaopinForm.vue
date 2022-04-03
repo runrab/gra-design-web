@@ -4,8 +4,8 @@
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
           <a-col :span="24">
-            <a-form-model-item label="招聘发布信息用户" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="userid">
-              <a-input v-model="model.userid" placeholder="请输入招聘发布信息用户"  ></a-input>
+            <a-form-model-item label="发布用户" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="userid">
+              <a-input v-model="model.userid" placeholder="请输入发布用户"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -106,7 +106,7 @@
               that.confirmLoading = false;
             })
           }
-         
+
         })
       },
     }

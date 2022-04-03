@@ -4,6 +4,25 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+          <a-col :md="6" :sm="12">
+            <a-form-item label="发布用户">
+              <j-input placeholder="输入发布用户模糊查询" v-model="queryParam.userid"></j-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="12">
+            <a-form-item label="发布内容">
+              <j-input placeholder="输入发布内容模糊查询" v-model="queryParam.context"></j-input>
+            </a-form-item>
+          </a-col>
+
+          <a-col :md="6" :sm="8">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+            </span>
+          </a-col>
+
         </a-row>
       </a-form>
     </div>
@@ -17,7 +36,7 @@
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+<!--      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -122,13 +141,15 @@
             }
           },
           {
-            title:'招聘发布信息用户',
+            title:'发布用户',
+            width:255,
             align:"center",
             sorter: true,
             dataIndex: 'userid'
           },
           {
             title:'头像',
+            width:150,
             align:"center",
             dataIndex: 'avatar',
             scopedSlots: {customRender: 'imgSlot'}
@@ -154,10 +175,10 @@
           deleteBatch: "/runrab/zhaopin/deleteBatch",
           exportXlsUrl: "/runrab/zhaopin/exportXls",
           importExcelUrl: "runrab/zhaopin/importExcel",
-          
+
         },
         dictOptions:{},
-        superFieldList:[],
+        // superFieldList:[],
       }
     },
     created() {

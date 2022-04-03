@@ -4,6 +4,52 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+
+          <a-col :md="6" :sm="12">
+            <a-form-item label="留言用户">
+              <j-input placeholder="输入留言用户模糊查询" v-model="queryParam.userid"></j-input>
+            </a-form-item>
+          </a-col>
+
+          <a-col :md="6" :sm="8">
+            <a-form-item label="可见性">
+              <a-select v-model="queryParam.visible" placeholder="请选择可见性">
+                <a-select-option value="">请选择</a-select-option>
+                <a-select-option value="0">本人可见</a-select-option>
+                <a-select-option value="1">全部可见</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+
+          <template v-if="toggleSearchStatus">
+            <a-col :md="6" :sm="8">
+              <a-form-item label="身份信息">
+                <a-select v-model="queryParam.identity" placeholder="请选择身份信息">
+                  <a-select-option value="">请选择</a-select-option>
+                  <a-select-option value="0">教师</a-select-option>
+                  <a-select-option value="1">学生</a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+
+            <a-col :md="6" :sm="12">
+              <a-form-item label="留言内容">
+                <j-input placeholder="输入留言内容模糊查询" v-model="queryParam.context"></j-input>
+              </a-form-item>
+            </a-col>
+          </template>
+
+          <a-col :md="6" :sm="8">
+            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+              <a @click="handleToggleSearch" style="margin-left: 8px">
+                {{ toggleSearchStatus ? '收起' : '展开' }}
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+              </a>
+            </span>
+          </a-col>
+
         </a-row>
       </a-form>
     </div>
@@ -17,7 +63,7 @@
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+<!--      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -137,13 +183,31 @@
             title:'身份信息',
             align:"center",
             sorter: true,
-            dataIndex: 'identity'
+            dataIndex: 'identity',
+            customRender: function (text) {
+              if (text == '0') {
+                return "教师";
+              }else if (text == '1'){
+                return "学生";
+              } else {
+                return "学生";
+              }
+            }
           },
           {
             title:'可见性',
             align:"center",
             sorter: true,
-            dataIndex: 'visible'
+            dataIndex: 'visible',
+            customRender: function (text) {
+              if (text == '1') {
+                return "全体可见";
+              }else if (text == '0'){
+                return "本人可见";
+              } else {
+                return "本人可见";
+              }
+            }
           },
           {
             title:'留言内容',
@@ -165,7 +229,7 @@
           deleteBatch: "/runrab/message/deleteBatch",
           exportXlsUrl: "/runrab/message/exportXls",
           importExcelUrl: "runrab/message/importExcel",
-          
+
         },
         dictOptions:{},
         superFieldList:[],
