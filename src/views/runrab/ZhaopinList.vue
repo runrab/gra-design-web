@@ -156,7 +156,7 @@
           },
           {
             title:'发布内容',
-            align:"center",
+            align:"left",
             dataIndex: 'context',
             scopedSlots: {customRender: 'htmlSlot'}
           },

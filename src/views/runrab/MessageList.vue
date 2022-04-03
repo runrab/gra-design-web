@@ -26,8 +26,8 @@
               <a-form-item label="身份信息">
                 <a-select v-model="queryParam.identity" placeholder="请选择身份信息">
                   <a-select-option value="">请选择</a-select-option>
-                  <a-select-option value="0">教师</a-select-option>
-                  <a-select-option value="1">学生</a-select-option>
+                  <a-select-option value="1">教师</a-select-option>
+                  <a-select-option value="2">学生</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -63,7 +63,6 @@
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
-<!--      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -185,9 +184,9 @@
             sorter: true,
             dataIndex: 'identity',
             customRender: function (text) {
-              if (text == '0') {
+              if (text == '1') {
                 return "教师";
-              }else if (text == '1'){
+              }else if (text == '2'){
                 return "学生";
               } else {
                 return "学生";
@@ -211,7 +210,7 @@
           },
           {
             title:'留言内容',
-            align:"center",
+            align:"left",
             dataIndex: 'context'
           },
           {

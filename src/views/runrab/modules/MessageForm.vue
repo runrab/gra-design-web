@@ -10,16 +10,15 @@
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="用户头像" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="avatar">
-              <j-image-upload isMultiple  v-model="model.avatar" ></j-image-upload>
+              <j-image-upload class="avatar-uploader" text="上传" v-model="model.avatar" ></j-image-upload>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="身份信息" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="identity">
 <!--              <a-input-number v-model="model.identity" placeholder="请输入身份信息" style="width: 100%" />-->
               <a-select v-model="model.identity" placeholder="请选择身份信息" style="width: 100%">
-<!--                <a-select-option value="">请选择</a-select-option>-->
-                <a-select-option value="0">教师</a-select-option>
-                <a-select-option value="1">学生</a-select-option>
+                <a-select-option value="1">教师</a-select-option>
+                <a-select-option value="2">学生</a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
@@ -27,7 +26,6 @@
             <a-form-model-item label="可见性" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="visible">
 <!--              <a-input-number v-model="model.visible" placeholder="请输入可见性" style="width: 100%" />-->
               <a-select v-model="model.visible" placeholder="请选择可见性" style="width: 100%">
-<!--                <a-select-option value="">请选择</a-select-option>-->
                 <a-select-option value="0">本人可见</a-select-option>
                 <a-select-option value="1">全部可见</a-select-option>
               </a-select>

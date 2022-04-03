@@ -10,7 +10,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="avatar">
-              <j-image-upload isMultiple  v-model="model.avatar" ></j-image-upload>
+              <j-image-upload class="avatar-uploader" text="上传" v-model="model.avatar" ></j-image-upload>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
