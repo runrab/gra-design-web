@@ -7,7 +7,7 @@
     @close="close"
     destroyOnClose
     :visible="visible">
-    <message-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit" normal></message-form>
+    <zhaopin-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit" normal></zhaopin-form>
     <div class="drawer-footer">
       <a-button @click="handleCancel" style="margin-bottom: 0;">关闭</a-button>
       <a-button v-if="!disableSubmit"  @click="handleOk" type="primary" style="margin-bottom: 0;">提交</a-button>
@@ -17,12 +17,12 @@
 
 <script>
 
-  import MessageForm from './MessageForm'
+  import ZhaopinForm from './ZhaopinForm'
 
   export default {
-    name: 'MessageModal',
+    name: 'ZhaopinModal',
     components: {
-      MessageForm
+      ZhaopinForm
     },
     data () {
       return {

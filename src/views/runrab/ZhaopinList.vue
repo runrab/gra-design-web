@@ -6,47 +6,20 @@
         <a-row :gutter="24">
 
           <a-col :md="6" :sm="12">
-            <a-form-item label="留言用户">
-              <j-input placeholder="输入留言用户模糊查询" v-model="queryParam.userid"></j-input>
+            <a-form-item label="发布用户">
+              <j-input placeholder="输入发布用户模糊查询" v-model="queryParam.userid"></j-input>
             </a-form-item>
           </a-col>
-
-          <a-col :md="6" :sm="8">
-            <a-form-item label="可见性">
-              <a-select v-model="queryParam.visible" placeholder="请选择可见性">
-                <a-select-option value="">请选择</a-select-option>
-                <a-select-option value="0">本人可见</a-select-option>
-                <a-select-option value="1">全部可见</a-select-option>
-              </a-select>
+          <a-col :md="6" :sm="12">
+            <a-form-item label="发布内容">
+              <j-input placeholder="输入发布内容模糊查询" v-model="queryParam.context"></j-input>
             </a-form-item>
           </a-col>
-
-          <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="身份信息">
-                <a-select v-model="queryParam.identity" placeholder="请选择身份信息">
-                  <a-select-option value="">请选择</a-select-option>
-                  <a-select-option value="1">教师</a-select-option>
-                  <a-select-option value="2">学生</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-
-            <a-col :md="6" :sm="12">
-              <a-form-item label="留言内容">
-                <j-input placeholder="输入留言内容模糊查询" v-model="queryParam.context"></j-input>
-              </a-form-item>
-            </a-col>
-          </template>
 
           <a-col :md="6" :sm="8">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
             </span>
           </a-col>
 
@@ -58,11 +31,12 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('留言信息')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('招聘信息')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
+<!--      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -134,7 +108,7 @@
       </a-table>
     </div>
 
-    <message-modal ref="modalForm" @ok="modalFormOk"></message-modal>
+    <zhaopin-modal ref="modalForm" @ok="modalFormOk"></zhaopin-modal>
   </a-card>
 </template>
 
@@ -143,17 +117,17 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import MessageModal from './modules/MessageModal'
+  import ZhaopinModal from './modules/ZhaopinModal'
 
   export default {
-    name: 'MessageList',
+    name: 'ZhaopinList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      MessageModal
+      ZhaopinModal
     },
     data () {
       return {
-        description: '留言信息管理页面',
+        description: '招聘信息管理页面',
         // 表头
         columns: [
           {
@@ -167,51 +141,24 @@
             }
           },
           {
-            title:'留言用户',
+            title:'发布用户',
+            width:255,
             align:"center",
             sorter: true,
             dataIndex: 'userid'
           },
           {
-            title:'用户头像',
+            title:'头像',
+            width:150,
             align:"center",
             dataIndex: 'avatar',
             scopedSlots: {customRender: 'imgSlot'}
           },
           {
-            title:'身份信息',
-            align:"center",
-            sorter: true,
-            dataIndex: 'identity',
-            customRender: function (text) {
-              if (text == '1') {
-                return "教师";
-              }else if (text == '2'){
-                return "学生";
-              } else {
-                return "学生";
-              }
-            }
-          },
-          {
-            title:'可见性',
-            align:"center",
-            sorter: true,
-            dataIndex: 'visible',
-            customRender: function (text) {
-              if (text == '1') {
-                return "全体可见";
-              }else if (text == '0'){
-                return "本人可见";
-              } else {
-                return "本人可见";
-              }
-            }
-          },
-          {
-            title:'留言内容',
+            title:'发布内容',
             align:"left",
-            dataIndex: 'context'
+            dataIndex: 'context',
+            scopedSlots: {customRender: 'htmlSlot'}
           },
           {
             title: '操作',
@@ -223,15 +170,15 @@
           }
         ],
         url: {
-          list: "/runrab/message/list",
-          delete: "/runrab/message/delete",
-          deleteBatch: "/runrab/message/deleteBatch",
-          exportXlsUrl: "/runrab/message/exportXls",
-          importExcelUrl: "runrab/message/importExcel",
+          list: "/runrab/zhaopin/list",
+          delete: "/runrab/zhaopin/delete",
+          deleteBatch: "/runrab/zhaopin/deleteBatch",
+          exportXlsUrl: "/runrab/zhaopin/exportXls",
+          importExcelUrl: "runrab/zhaopin/importExcel",
 
         },
         dictOptions:{},
-        superFieldList:[],
+        // superFieldList:[],
       }
     },
     created() {
@@ -247,11 +194,9 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'userid',text:'留言用户',dictCode:''})
-        fieldList.push({type:'string',value:'avatar',text:'用户头像',dictCode:''})
-        fieldList.push({type:'int',value:'identity',text:'身份信息',dictCode:''})
-        fieldList.push({type:'int',value:'visible',text:'可见性',dictCode:''})
-        fieldList.push({type:'string',value:'context',text:'留言内容',dictCode:''})
+        fieldList.push({type:'string',value:'userid',text:'招聘发布信息用户',dictCode:''})
+        fieldList.push({type:'string',value:'avatar',text:'头像',dictCode:''})
+        fieldList.push({type:'string',value:'context',text:'发布内容',dictCode:''})
         this.superFieldList = fieldList
       }
     }

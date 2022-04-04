@@ -17,7 +17,7 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <span v-if="device === 'desktop'">高校毕业生信息去向跟踪系统</span>
+      <span v-if="device === 'desktop'">欢迎使用</span>
       <span v-else>Jeecg-Boot</span>
 
       <user-menu :theme="theme"/>

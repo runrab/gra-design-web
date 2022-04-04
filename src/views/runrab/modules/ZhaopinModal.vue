@@ -8,17 +8,17 @@
     :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
     @cancel="handleCancel"
     cancelText="关闭">
-    <message-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></message-form>
+    <zhaopin-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></zhaopin-form>
   </j-modal>
 </template>
 
 <script>
 
-  import MessageForm from './MessageForm'
+  import ZhaopinForm from './ZhaopinForm'
   export default {
-    name: 'MessageModal',
+    name: 'ZhaopinModal',
     components: {
-      MessageForm
+      ZhaopinForm
     },
     data () {
       return {

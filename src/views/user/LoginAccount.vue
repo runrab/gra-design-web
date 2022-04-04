@@ -7,7 +7,7 @@
           </a-input>
         </a-form-model-item>
         <a-form-model-item required prop="password">
-          <a-input v-model="model.password" size="large" type="password" autocomplete="false" placeholder="请输入密码 / 123456">
+          <a-input v-model="model.password" size="large" type="password" autocomplete="false" placeholder="请输入密码 / 1qaz!QAZ">
             <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
           </a-input>
         </a-form-model-item>

@@ -5,11 +5,11 @@
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">毕设</span>
+            <span class="title">高校毕业生信息去向跟踪系统</span>
           </a>
         </div>
         <div class="desc">
-          高校毕业生信息去向跟踪系统
+          紧跟信息化时代发展，构建就业管理数字化、网络化、自动化平台
         </div>
       </div>
 
@@ -18,10 +18,10 @@
       <div class="footer">
         <div class="links">
           <a href="https://show.runrab.com/gra-design.html" target="_blank">导航</a>
-          <a href="https://zut.edu.cn" target="_blank">学校官网</a>
+          <a href="https://www.zut.edu.cn/" target="_blank">学校官网</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2022 <a href="https://zut.edu.cn" target="_blank">中原工学院</a>
+          Copyright &copy; 2022 <a href="https://www.zut.edu.cn/" target="_blank">中原工学院</a>
         </div>
       </div>
     </div>
