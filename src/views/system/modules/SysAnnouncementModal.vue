@@ -29,12 +29,20 @@
         <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" prop="msgType" label="接收用户">
           <a-radio-group v-model="model.msgType" :disabled="disableSubmit" @change="chooseMsgType">
             <a-radio value="USER">指定用户</a-radio>
+            <a-radio value="ORG">指定组织</a-radio>
             <a-radio value="ALL">全体用户</a-radio>
           </a-radio-group>
         </a-form-model-item>
-        <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="指定用户" v-if="userType">
+        <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="指定用户" v-if="(userType==='USER')">
           <j-select-multi-user :returnKeys="returnKeys" placeholder="请选择指定用户" v-model="userIds" :trigger-change="true"></j-select-multi-user>
         </a-form-model-item>
+
+
+        <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="指定组织" v-if="(userType==='ORG')">
+          <j-select-multi-user :returnKeys="returnKeys" placeholder="请选择指定组织" v-model="userIds" :trigger-change="true"></j-select-multi-user>
+        </a-form-model-item>
+
+
         <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="优先级" >
           <a-radio-group v-model="model.priority" placeholder="请选择优先级" :disabled="disableSubmit">
             <a-radio value="L">低</a-radio>
@@ -98,7 +106,8 @@
           add: "/sys/annountCement/add",
           edit: "/sys/annountCement/edit",
         },
-        userType:false,
+        // userType:false, //修改 为字符串
+        userType:'',
         userIds:[],
         selectedUser:[],
         disabled:false,
@@ -122,17 +131,27 @@
       getUser(record){
         //update-begin---author:wangshuai ---date:20211227  for：[JTC-191]系统通告参考vue3的来改，为单选按钮附默认值------------
         record.msgCategory = record.msgCategory?record.msgCategory:"1"
-        record.msgType = record.msgType?record.msgType:"ALL"
+        // record.msgType = record.msgType?record.msgType:"ALL"
+        record.msgType = record.msgType
         record.priority = record.priority?record.priority:"H"
         //update-begin---author:wangshuai ---date:20211227  for：[JTC-191]系统通告参考vue3的来改，为单选按钮附默认值------------
         this.model = Object.assign({}, record);
         // 指定用户
         if(record&&record.msgType === "USER"){
-          this.userType =  true;
+          // this.userType =  true;
+          this.userType =  "USER";
           //update-begin---author:wangshuai ---date:20220104  for：[JTC-304]指定人员不支持分页勾选,换通用的用户组件------------
           this.userIds = record.userIds.substr(0,record.userIds.length-1);
           //update-end---author:wangshuai ---date:20220104  for：[JTC-304]指定人员不支持分页勾选,换通用的用户组件------------
+        }else if (record&&record.msgType === "ORG"){ // 指定组织
+          this.userType =  "ORG";
+          //暂时组织内 userid 的方法可能为错误的
+          this.userIds = record.userIds.substr(0,record.userIds.length-1);
+        }else {
+          //默认全体
+          this.userType =  "ALL";
         }
+
       },
       close () {
         this.$emit('close');
@@ -143,10 +162,10 @@
       handleOk () {
         const that = this;
         //当设置指定用户类型，但用户为空时，后台报错
-        if(this.userType &&!(this.userIds!=null && this.userIds.length >0)){
-            this.$message.warning('指定用户不能为空！')
-            return;
-          }
+        // if(this.userType &&!(this.userIds!=null && this.userIds.length >0)){
+        //     this.$message.warning('指定用户不能为空！')
+        //     return;
+        //   }
         // 触发表单验证
         this.$refs.form.validate(valid => {
           if (valid) {
@@ -160,7 +179,7 @@
               httpurl+=this.url.edit;
                method = 'put';
             }
-            if(this.userType){
+            if(this.userType=="USER" || this.userType=="ORG"){
               //update-begin---author:wangshuai ---date:20220104  for：[JTC-304]指定人员不支持分页勾选,换通用的用户组件------------
               this.model.userIds =  this.userIds+",";
               //update-end---author:wangshuai ---date:20220104  for：[JTC-304]指定人员不支持分页勾选,换通用的用户组件------------
@@ -190,16 +209,21 @@
         this.resetUser();
       },
       resetUser (){
-        this.userType =  false;
+        // this.userType =  false;
+        this.userType =  "ALL";
         this.userIds = [];
         this.disabled = false;
         this.$refs.UserListModal.edit(null,null);
       },
       chooseMsgType(e) {
         if("USER" == e.target.value) {
-          this.userType = true;
-        } else {
-          this.userType = false;
+          // this.userType = true;
+          this.userType = "USER";
+        }else if ("ORG" == e.target.value) {
+          this.userType = "ORG";
+        }
+        else {
+          this.userType = "ALL";
           this.userIds = [];
         }
       },
