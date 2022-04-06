@@ -39,8 +39,16 @@
 
 
         <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="指定组织" v-if="(userType==='ORG')">
-          <j-select-multi-user :returnKeys="returnKeys" placeholder="请选择指定组织" v-model="userIds" :trigger-change="true"></j-select-multi-user>
+<!--          <j-select-multi-user :returnKeys="returnKeys" placeholder="请选择指定组织" v-model="userIds" :trigger-change="true"></j-select-multi-user>-->
+          <j-select-depart v-model="userIds" :multi="true"/>
         </a-form-model-item>
+<!--        <a-form-item label="部门多选v-model" style="width: 300px">-->
+<!--          <j-select-depart v-model="bumens" :multi="true"/>-->
+<!--          {{ bumens }}-->
+<!--        </a-form-item>-->
+
+
+
 
 
         <a-form-model-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="优先级" >
@@ -179,7 +187,7 @@
               httpurl+=this.url.edit;
                method = 'put';
             }
-            if(this.userType=="USER" || this.userType=="ORG"){
+            if(this.userType==="USER" || this.userType==="ORG"){
               //update-begin---author:wangshuai ---date:20220104  for：[JTC-304]指定人员不支持分页勾选,换通用的用户组件------------
               this.model.userIds =  this.userIds+",";
               //update-end---author:wangshuai ---date:20220104  for：[JTC-304]指定人员不支持分页勾选,换通用的用户组件------------

@@ -200,6 +200,8 @@
                 return "指定用户";
               } else if (text == "ALL") {
                 return "全体用户";
+              } else if (text == "ORG") {
+                return "指定组织";
               } else {
                 return text;
               }
