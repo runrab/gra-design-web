@@ -327,7 +327,7 @@
         ],
         url: {
           syncUser: "/act/process/extActProcess/doSyncUser",
-          list: "/sys/user/list?identity=2",
+          list: "/sys/user/list",
           delete: "/sys/user/delete",
           deleteBatch: "/sys/user/deleteBatch",
           exportXlsUrl: "/sys/user/exportXls",
