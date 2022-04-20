@@ -38,13 +38,17 @@
             </a-col>
 
             <a-col :md="6" :sm="8">
-              <a-form-item label="用户状态">
-                <a-select v-model="queryParam.status" placeholder="请选择">
-                  <a-select-option value="">请选择</a-select-option>
-                  <a-select-option value="1">正常</a-select-option>
-                  <a-select-option value="2">冻结</a-select-option>
-                </a-select>
+              <a-form-item label="学号">
+                <!--<j-input placeholder="请输入账号查询" v-model="queryParam.username"></j-input>-->
+                <j-input placeholder="请输入学号查询" v-model="queryParam.workNo"></j-input>
               </a-form-item>
+<!--              <a-form-item label="用户状态">-->
+<!--                <a-select v-model="queryParam.status" placeholder="请选择">-->
+<!--                  <a-select-option value="">请选择</a-select-option>-->
+<!--                  <a-select-option value="1">正常</a-select-option>-->
+<!--                  <a-select-option value="2">冻结</a-select-option>-->
+<!--                </a-select>-->
+<!--              </a-form-item>-->
             </a-col>
           </template>
 
@@ -92,7 +96,7 @@
           <a-icon type="down"/>
         </a-button>
       </a-dropdown>
-      <j-super-query :fieldList="superQueryFieldList" @handleSuperQuery="handleSuperQuery"/>
+<!--      <j-super-query :fieldList="superQueryFieldList" @handleSuperQuery="handleSuperQuery"/>-->
     </div>
 
     <!-- table区域-begin -->
@@ -235,7 +239,7 @@
             dataIndex: 'realname',
           },
           {
-            title: '学(工)号',
+            title: '学号',
             align: "center",
             dataIndex: 'workNo',
             width: 120,
@@ -257,7 +261,7 @@
             sorter: true
           },
           {
-            title: '生日',
+            title: '出生日期',
             align: "center",
             width: 90,
             dataIndex: 'birthday'
@@ -274,21 +278,21 @@
             width: 160,
             dataIndex: 'orgCodeTxt'
           },
-          {
-            title:'用户身份',
-            align:"center",
-            sorter: true,
-            dataIndex: 'identity',
-            customRender: function (text) {
-              if (text == '2') {
-                return "管理员";
-              }else if (text == '1'){
-                return "教师";
-              } else {
-                return "学生";
-              }
-            }
-          },
+          // {
+          //   title:'用户身份',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'identity',
+          //   customRender: function (text) {
+          //     if (text == '2') {
+          //       return "管理员";
+          //     }else if (text == '1'){
+          //       return "教师";
+          //     } else {
+          //       return "学生";
+          //     }
+          //   }
+          // },
           // {
           //   title: '负责部门',
           //   align: "center",
@@ -317,7 +321,7 @@
         ],
         url: {
           syncUser: "/act/process/extActProcess/doSyncUser",
-          list: "/sys/user/list",
+          list: "/sys/user/list?identity=0",
           delete: "/sys/user/delete",
           deleteBatch: "/sys/user/deleteBatch",
           exportXlsUrl: "/sys/user/exportXls",

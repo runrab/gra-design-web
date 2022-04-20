@@ -38,13 +38,17 @@
             </a-col>
 
             <a-col :md="6" :sm="8">
-              <a-form-item label="用户状态">
-                <a-select v-model="queryParam.status" placeholder="请选择">
-                  <a-select-option value="">请选择</a-select-option>
-                  <a-select-option value="1">正常</a-select-option>
-                  <a-select-option value="2">冻结</a-select-option>
-                </a-select>
+              <a-form-item label="工号">
+                <!--<j-input placeholder="请输入账号查询" v-model="queryParam.username"></j-input>-->
+                <j-input placeholder="请输入工号查询" v-model="queryParam.workNo"></j-input>
               </a-form-item>
+<!--              <a-form-item label="用户状态">-->
+<!--                <a-select v-model="queryParam.status" placeholder="请选择">-->
+<!--                  <a-select-option value="">请选择</a-select-option>-->
+<!--                  <a-select-option value="1">正常</a-select-option>-->
+<!--                  <a-select-option value="2">冻结</a-select-option>-->
+<!--                </a-select>-->
+<!--              </a-form-item>-->
             </a-col>
           </template>
 
@@ -92,7 +96,7 @@
           <a-icon type="down"/>
         </a-button>
       </a-dropdown>
-      <j-super-query :fieldList="superQueryFieldList" @handleSuperQuery="handleSuperQuery"/>
+<!--      <j-super-query :fieldList="superQueryFieldList" @handleSuperQuery="handleSuperQuery"/>-->
     </div>
 
     <!-- table区域-begin -->
@@ -231,13 +235,20 @@
           {
             title: '用户姓名',
             align: "center",
-            width: 100,
+            width: 90,
             dataIndex: 'realname',
+          },
+          {
+            title: '工号',
+            align: "center",
+            dataIndex: 'workNo',
+            width: 120,
+            sorter: true
           },
           {
             title: '头像',
             align: "center",
-            width: 120,
+            width: 80,
             dataIndex: 'avatar',
             scopedSlots: {customRender: "avatarslot"}
           },
@@ -245,40 +256,55 @@
           {
             title: '性别',
             align: "center",
-            width: 80,
+            width: 70,
             dataIndex: 'sex_dictText',
             sorter: true
           },
-          {
-            title: '生日',
-            align: "center",
-            width: 100,
-            dataIndex: 'birthday'
-          },
+          // {
+          //   title: '生日',
+          //   align: "center",
+          //   width: 100,
+          //   dataIndex: 'birthday'
+          // },
           {
             title: '手机号码',
             align: "center",
-            width: 100,
+            width: 110,
             dataIndex: 'phone'
           },
           {
             title: '部门',
             align: "center",
-            width: 180,
+            width: 160,
             dataIndex: 'orgCodeTxt'
           },
+          // {
+          //   title:'用户身份',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'identity',
+          //   customRender: function (text) {
+          //     if (text == '2') {
+          //       return "管理员";
+          //     }else if (text == '1'){
+          //       return "教师";
+          //     } else {
+          //       return "学生";
+          //     }
+          //   }
+          // },
           {
             title: '负责部门',
             align: "center",
             width: 180,
             dataIndex: 'departIds_dictText'
           },
-          {
-            title: '状态',
-            align: "center",
-            width: 80,
-            dataIndex: 'status_dictText'
-          },
+          // {
+          //   title: '状态',
+          //   align: "center",
+          //   width: 80,
+          //   dataIndex: 'status_dictText'
+          // },
           // {
           //   title: '身份',
           //   align: "center",
@@ -301,7 +327,7 @@
         ],
         url: {
           syncUser: "/act/process/extActProcess/doSyncUser",
-          list: "/sys/user/adminList",
+          list: "/sys/user/list?identity=2",
           delete: "/sys/user/delete",
           deleteBatch: "/sys/user/deleteBatch",
           exportXlsUrl: "/sys/user/exportXls",
