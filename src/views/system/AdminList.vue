@@ -301,7 +301,7 @@
         ],
         url: {
           syncUser: "/act/process/extActProcess/doSyncUser",
-          list: "/sys/user/list",  //teaList  TeaList.vue adminList AdminList.vue
+          list: "/sys/user/adminList",
           delete: "/sys/user/delete",
           deleteBatch: "/sys/user/deleteBatch",
           exportXlsUrl: "/sys/user/exportXls",
