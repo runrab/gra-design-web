@@ -170,7 +170,7 @@
             title:'留言用户',
             align:"center",
             sorter: true,
-            dataIndex: 'userid'
+            dataIndex: 'createBy'
           },
           {
             title:'用户头像',

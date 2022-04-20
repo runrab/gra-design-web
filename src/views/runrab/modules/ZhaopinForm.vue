@@ -3,16 +3,16 @@
     <j-form-container :disabled="formDisabled">
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
-          <a-col :span="24">
-            <a-form-model-item label="发布用户" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="userid">
-              <a-input v-model="model.userid" placeholder="请输入发布用户"  ></a-input>
-            </a-form-model-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-model-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="avatar">
-              <j-image-upload class="avatar-uploader" text="上传" v-model="model.avatar" ></j-image-upload>
-            </a-form-model-item>
-          </a-col>
+<!--          <a-col :span="24">-->
+<!--            <a-form-model-item label="发布用户" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="userid">-->
+<!--              <a-input v-model="model.userid" placeholder="请输入发布用户"  ></a-input>-->
+<!--            </a-form-model-item>-->
+<!--&lt;!&ndash;          </a-col>&ndash;&gt;-->
+<!--          <a-col :span="24">-->
+<!--            <a-form-model-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="avatar">-->
+<!--              <j-image-upload class="avatar-uploader" text="上传" v-model="model.avatar" ></j-image-upload>-->
+<!--            </a-form-model-item>-->
+<!--          </a-col>-->
           <a-col :span="24">
             <a-form-model-item label="发布内容" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="context">
               <j-editor v-model="model.context" />
@@ -25,9 +25,9 @@
 </template>
 
 <script>
-
   import { httpAction, getAction } from '@/api/manage'
   import { validateDuplicateValue } from '@/utils/util'
+
 
   export default {
     name: 'ZhaopinForm',
@@ -82,6 +82,8 @@
       },
       submitForm () {
         const that = this;
+        this.model.avatar=this.$store.getters.avatar
+        this.model.userid=this.$store.getters.userid
         // 触发表单验证
         this.$refs.form.validate(valid => {
           if (valid) {

@@ -3,16 +3,11 @@
     <j-form-container :disabled="formDisabled">
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
-          <a-col :span="24">
-            <a-form-model-item label="留言用户" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="userid">
-              <a-input v-model="model.userid" placeholder="请输入留言用户"  ></a-input>
-            </a-form-model-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-model-item label="用户头像" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="avatar">
-              <j-image-upload class="avatar-uploader" text="上传" v-model="model.avatar" ></j-image-upload>
-            </a-form-model-item>
-          </a-col>
+<!--          <a-col :span="24">-->
+<!--            <a-form-model-item label="用户头像" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="avatar">-->
+<!--              <j-image-upload class="avatar-uploader" text="上传" v-model="model.avatar" ></j-image-upload>-->
+<!--            </a-form-model-item>-->
+<!--          </a-col>-->
           <a-col :span="24">
             <a-form-model-item label="身份信息" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="identity">
 <!--              <a-input-number v-model="model.identity" placeholder="请输入身份信息" style="width: 100%" />-->
@@ -99,6 +94,8 @@
         this.visible = true;
       },
       submitForm () {
+        this.model.avatar=this.$store.getters.avatar
+        this.model.userid=this.$store.getters.userid
         const that = this;
         // 触发表单验证
         this.$refs.form.validate(valid => {

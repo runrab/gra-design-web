@@ -13,6 +13,7 @@ const getters = {
   userInfo: state => {state.user.info = Vue.ls.get(USER_INFO); return state.user.info},
   addRouters: state => state.permission.addRouters,
   onlAuthFields: state => {return state.online.authFields },
+  userid: state => state.user.info.id,   //用户id
   enhanceJs:(state) => (code) => {
     state.enhance.enhanceJs[code] = Vue.ls.get(ENHANCE_PRE+code);
     return state.enhance.enhanceJs[code]

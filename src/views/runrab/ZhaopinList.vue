@@ -7,7 +7,7 @@
 
           <a-col :md="6" :sm="12">
             <a-form-item label="发布用户">
-              <j-input placeholder="输入发布用户模糊查询" v-model="queryParam.userid"></j-input>
+              <j-input placeholder="输入发布用户模糊查询" v-model="queryParam.createBy"></j-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="12">
@@ -145,7 +145,7 @@
             width:255,
             align:"center",
             sorter: true,
-            dataIndex: 'userid'
+            dataIndex: 'createBy'
           },
           {
             title:'头像',
@@ -194,8 +194,8 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'userid',text:'招聘发布信息用户',dictCode:''})
-        fieldList.push({type:'string',value:'avatar',text:'头像',dictCode:''})
+        fieldList.push({type:'string',value:'createTime',text:'招聘发布信息用户',dictCode:''})
+        // fieldList.push({type:'string',value:'avatar',text:'头像',dictCode:''})
         fieldList.push({type:'string',value:'context',text:'发布内容',dictCode:''})
         this.superFieldList = fieldList
       }
