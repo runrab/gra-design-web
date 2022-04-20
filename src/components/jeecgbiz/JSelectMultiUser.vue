@@ -28,10 +28,12 @@
       return {
         url: { list: '/sys/user/list' },
         columns: [
-          { title: '姓名', align: 'center', width: '25%', widthRight: '70%', dataIndex: 'realname' },
-          { title: '账号', align: 'center', width: '25%', dataIndex: 'username' },
+          { title: '账号', align: 'center', width: '25%', widthRight: '70%', dataIndex: 'username' },
+          { title: '姓名', align: 'center', width: '25%', dataIndex: 'realname' },
+          { title: '学(工)号', align: 'center', width: '25%', dataIndex: 'workNo' },
           { title: '电话', align: 'center', width: '20%', dataIndex: 'phone' },
-          { title: '出生日期', align: 'center', width: '20%', dataIndex: 'birthday' }
+          // { title: '部门', align: 'center', width: '25%', dataIndex: 'orgCodeTxt' },
+          // { title: '出生日期', align: 'center', width: '20%', dataIndex: 'birthday' }
         ],
         // 定义在这里的参数都是可以在外部传递覆盖的，可以更灵活的定制化使用的组件
         default: {
@@ -39,25 +41,41 @@
           width: 1200,
           displayKey: 'realname',
           returnKeys: ['id', 'username'],
-          queryParamText: '账号',
+          queryParamText: 'ID',
         },
         // 多条件查询配置
         queryConfigDefault: [
           {
-            key: 'sex',
-            label: '性别',
-            // 如果包含 dictCode，那么就会显示成下拉框
-            dictCode: 'sex',
+            key: 'username',
+            label: '账号',
           },
           {
-            key: 'birthday',
-            label: '生日',
-            placeholder: '请选择出生日期',
-            // 如果想要使用局部注册的组件，就必须要使用箭头函数
-            customRender: ({key, queryParam, options}) => {
-              return <j-date {...options} vModel={queryParam[key]} style="width:180px;"/>
-            },
+            key: 'realname',
+            label: '姓名',
           },
+          // {
+          //   key: 'sex',
+          //   label: '性别',
+          //   // 如果包含 dictCode，那么就会显示成下拉框
+          //   dictCode: 'sex',
+          // },
+          {
+            key: 'workNo',
+            label: '学(工)号',
+          },
+          {
+            key: 'phone',
+            label: '电话',
+          },
+          // {
+          //   key: 'birthday',
+          //   label: '生日',
+          //   placeholder: '请选择出生日期',
+          //   // 如果想要使用局部注册的组件，就必须要使用箭头函数
+          //   customRender: ({key, queryParam, options}) => {
+          //     return <j-date {...options} vModel={queryParam[key]} style="width:180px;"/>
+          //   },
+          // },
         ],
       }
     },
