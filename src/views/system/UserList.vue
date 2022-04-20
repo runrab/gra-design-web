@@ -121,7 +121,7 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a @click="handleEdit(record)" >编辑</a>
 
           <a-divider type="vertical" />
 
@@ -279,12 +279,6 @@
             width: 80,
             dataIndex: 'status_dictText'
           },
-          // {
-          //   title: '身份',
-          //   align: "center",
-          //   width: 40,
-          //   dataIndex: 'visible'
-          // },
           {
             title: '操作',
             dataIndex: 'action',
@@ -301,7 +295,7 @@
         ],
         url: {
           syncUser: "/act/process/extActProcess/doSyncUser",
-          list: "/sys/user/list",  //teaList  TeaList.vue adminList AdminList.vue
+          list: "/sys/user/list",
           delete: "/sys/user/delete",
           deleteBatch: "/sys/user/deleteBatch",
           exportXlsUrl: "/sys/user/exportXls",
